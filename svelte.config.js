@@ -19,7 +19,6 @@ const config = {
       strict: true
     })
 	},
-  preprocess: vitePreprocess()
 };
 
 export default config;
