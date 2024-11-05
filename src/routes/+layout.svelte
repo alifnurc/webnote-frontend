@@ -13,3 +13,12 @@
 </nav>
 
 <slot />
+
+<footer>
+  <p class="text-center">Copyright © 2024 Web Note</p>
+
+  <section class="flex justify-center underline">
+    <a href="/about" class="mr-2">About</a>
+    <a href="/contact" class="mr-2">Contact Us</a>
+  </section>
+</footer>
