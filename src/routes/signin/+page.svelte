@@ -1,1 +1,26 @@
-<h1>Sign In page</h1>
+<h1 class="text-center font-bold">Sign In page</h1>
+
+<section class="flex justify-center items-start">
+  <form
+    id="signin"
+    method="post"
+    class="w-2/6 flex flex-col items-start"
+    action="?/signin"
+  >
+    <label for="username">
+      Username:
+      <input type="text" name="username" required />
+    </label>
+
+    <label for="password">
+      Password:
+      <input type="password" name="password" required />
+    </label>
+
+    <input
+      type="submit"
+      value="Sign In"
+      class="border-none text-black mb-1 hover:bg-black hover:text-white"
+    />
+  </form>
+</section>
