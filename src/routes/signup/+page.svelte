@@ -1,7 +1,23 @@
+<script>
+  let data = $props();
+  console.log(data);
+</script>
+
 <h1 class="text-center font-bold">Sign Up page</h1>
 
+{#if data.form?.success}
+  <p class="text-center">Successfully signed up!</p>
+{:else if data.form?.error}
+  <p class="text-center">Error: {data.form.error}</p>
+{/if}
+
 <section class="flex justify-center items-start">
-  <form id="signup" method="post" class="w-2/6 flex flex-col items-start">
+  <form
+    id="signup"
+    method="post"
+    class="w-2/6 flex flex-col items-start"
+    action="?/signup"
+  >
     <label for="username"
       >Username:
       <input type="text" name="username" required /></label
