@@ -12,7 +12,7 @@ export const actions = {
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = await response.text();
       return {
         error: error,
       };
