@@ -1,7 +1,9 @@
+import { fail, redirect } from "@sveltejs/kit";
+
 export const prerender = false;
 
 export const actions = {
-  signin: async ({ request }) => {
+  signin: async ({ request, cookies }) => {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
@@ -11,17 +13,16 @@ export const actions = {
       body: JSON.stringify({ username, password }),
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      return {
-        error: error,
-      };
+    if (response.ok) {
+      const jsonObj = await response.json();
+      cookies.set("jwt", jsonObj.token, {
+        path: "/",
+        sameSite: "strict",
+      });
+
+      throw redirect(303, "/dashboard");
     }
 
-    const data = await response.json();
-    return {
-      success: true,
-      message: data,
-    };
+    return fail(400, { error: "Invalid username or password" });
   },
 };
