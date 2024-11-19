@@ -1,13 +1,20 @@
 <script lang="ts">
-  let data = $props();
+  let { form } = $props();
+  let errorMessage = $state(form?.error);
+
+  $effect(() => {
+    if (form?.error) {
+      setTimeout(() => (errorMassage = null), 10000);
+    }
+  });
 </script>
 
 <h1 class="text-center font-bold">Sign Up page</h1>
 
-{#if data.form?.success}
-  <p class="text-center">Successfully signed up!</p>
-{:else if data.form?.error}
-  <p class="text-center">Error: {data.form.error}</p>
+{#if errorMessage}
+  <p class="text-red-500 text-center">{errorMessage}</p>
+{:else if form?.success}
+  <p class="text-green-500 text-center">Successfully signed up!</p>
 {/if}
 
 <section class="flex justify-center items-start">

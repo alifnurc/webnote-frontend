@@ -1,15 +1,19 @@
 <script lang="ts">
-  let data = $props();
-  let errorMassage = $state(data.form?.error);
+  let { form } = $props();
+  let errorMessage = $state(form?.error);
 
   $effect(() => {
-    if (data.form?.error) {
-      setTimeout(() => (errorMassage = null), 10000);
+    if (form?.error) {
+      setTimeout(() => (errorMessage = null), 10000);
     }
   });
 </script>
 
 <h1 class="text-center font-bold">Sign In page</h1>
+
+{#if errorMessage}
+  <p class="text-red-500 text-center">{errorMessage}</p>
+{/if}
 
 <section class="flex justify-center items-start">
   <form
@@ -35,7 +39,3 @@
     />
   </form>
 </section>
-
-{#if errorMassage}
-  <p class="text-red-500 text-center">{errorMassage}</p>
-{/if}

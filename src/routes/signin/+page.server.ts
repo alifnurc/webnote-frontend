@@ -13,16 +13,16 @@ export const actions = {
       body: JSON.stringify({ username, password }),
     });
 
-    if (response.ok) {
-      const jsonObj = await response.json();
-      cookies.set("jwt", jsonObj.token, {
-        path: "/",
-        sameSite: "strict",
-      });
-
-      throw redirect(303, "/dashboard");
+    if (!response.ok) {
+      return fail(400, { error: await response.text() });
     }
 
-    return fail(400, { error: "Invalid username or password" });
+    const jsonObj = await response.json();
+    cookies.set("jwt", JSON.stringify(jsonObj), {
+      path: "/",
+      sameSite: "strict",
+    });
+
+    throw redirect(303, "/dashboard");
   },
 };

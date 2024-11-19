@@ -1,3 +1,5 @@
+import { fail } from "@sveltejs/kit";
+
 export const prerender = false;
 
 export const actions = {
@@ -16,16 +18,9 @@ export const actions = {
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      return {
-        error: error,
-      };
+      return fail(400, { error: await response.text() });
     }
 
-    const data = await response.text();
-    return {
-      success: true,
-      message: data,
-    };
+    return { success: true };
   },
 };
