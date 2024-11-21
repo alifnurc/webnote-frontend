@@ -30,7 +30,7 @@ export async function load({ cookies }) {
   const notes = await response.json();
   return {
     user: user.username,
-    notes: notes.notes
+    notes: notes.notes,
   };
 }
 
