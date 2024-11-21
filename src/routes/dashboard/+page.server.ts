@@ -39,4 +39,31 @@ export const actions = {
     cookies.delete("jwt", { path: "/" });
     throw redirect(303, "/signin");
   },
+
+  add: async ({ cookies, request }) => {
+    const user = JSON.parse(cookies.get("jwt"));
+    const formData = await request.formData();
+    const title = formData.get("title");
+    const description = formData.get("description");
+
+    const form = new FormData();
+    form.append("note_title", title);
+    form.append("note_description", description);
+
+    const response = await fetch(`http://127.0.0.1:5000/addnote`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + user.access_token,
+      },
+      body: form,
+    });
+
+    if (!response.ok) {
+      return fail(400, { error: await response.text() });
+    }
+
+    return {
+      success: true,
+    };
+  },
 };

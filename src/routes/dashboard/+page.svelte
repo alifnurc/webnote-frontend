@@ -23,6 +23,20 @@
 
 <p>{result}</p>
 
+<h1 class="font-bold">Add note</h1>
+<form action="?/add" method="post">
+  <label for="title"
+    >Title:
+    <input type="text" name="title" /></label
+  >
+
+  <label for="description"
+    >Description:
+    <input type="text" name="description" /></label
+  >
+  <button type="submit">Add</button>
+</form>
+
 <form action="?/logout" method="post">
   <button type="submit">Logout</button>
 </form>
