@@ -11,7 +11,7 @@
   <ul>
     {#each data.notes as note}
       <li>
-        <form onclick={(result = note.description)}>
+        <form onclick={(result = note)}>
           <button>{note.title}</button>
         </form>
       </li>
@@ -21,7 +21,22 @@
 
 <br />
 
-<p>{result}</p>
+{#if result}
+  <form action="?/delete" method="post">
+    <p class="font-bold">{result.title}</p>
+    <p class="italic">{result.description}</p>
+
+    <input type="hidden" name="id" value={result.id} />
+
+    <button
+      type="submit"
+      class="border-none text-black mb-1 hover:bg-black hover:text-white"
+      >Delete</button
+    >
+  </form>
+{/if}
+
+<br />
 
 <h1 class="font-bold">Add note</h1>
 <form action="?/add" method="post">

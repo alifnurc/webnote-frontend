@@ -66,4 +66,25 @@ export const actions = {
       success: true,
     };
   },
+
+  delete: async ({ cookies, request }) => {
+    const user = JSON.parse(cookies.get("jwt"));
+    const formData = await request.formData();
+    const id = formData.get("id");
+
+    const response = await fetch(`http://127.0.0.1:5000/deletenote?note_id=${id}`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + user.access_token,
+      },
+    });
+
+    if (!response.ok) {
+      return fail(400, { error: await response.text() });
+    }
+
+    return {
+      success: true,
+    };
+  },
 };
