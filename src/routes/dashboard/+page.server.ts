@@ -35,14 +35,10 @@ export async function load({ cookies }) {
 }
 
 export const actions = {
-  logout: async ({ cookies }) => {
-    cookies.delete("jwt", { path: "/" });
-    throw redirect(303, "/signin");
-  },
-
-  add: async ({ cookies, request }) => {
-    const user = JSON.parse(cookies.get("jwt"));
+  default: async ({ cookies, request }) => {
     const formData = await request.formData();
+    const action = formData.get("action");
+    const id = formData.get("id");
     const title = formData.get("title");
     const description = formData.get("description");
 
@@ -50,41 +46,65 @@ export const actions = {
     form.append("note_title", title);
     form.append("note_description", description);
 
-    const response = await fetch(`http://127.0.0.1:5000/addnote`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + user.access_token,
-      },
-      body: form,
-    });
-
-    if (!response.ok) {
-      return fail(400, { error: await response.text() });
-    }
-
-    return {
-      success: true,
-    };
-  },
-
-  delete: async ({ cookies, request }) => {
     const user = JSON.parse(cookies.get("jwt"));
-    const formData = await request.formData();
-    const id = formData.get("id");
 
-    const response = await fetch(`http://127.0.0.1:5000/deletenote?note_id=${id}`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + user.access_token,
-      },
-    });
+    if (action === "update") {
+      const response = await fetch(
+        `http://127.0.0.1:5000/updatenote?note_id=${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + user.access_token,
+          },
+          body: form,
+        },
+      );
 
-    if (!response.ok) {
-      return fail(400, { error: await response.text() });
+      if (!response.ok) {
+        return fail(400, { error: await response.text() });
+      }
+
+      return {
+        success: true,
+      };
     }
 
-    return {
-      success: true,
-    };
+    if (action === "delete") {
+      const response = await fetch(
+        `http://127.0.0.1:5000/deletenote?note_id=${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + user.access_token,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        return fail(400, { error: await response.text() });
+      }
+
+      return {
+        success: true,
+      };
+    }
+
+    if (action === "add") {
+      const response = await fetch(`http://127.0.0.1:5000/addnote`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + user.access_token,
+        },
+        body: form,
+      });
+
+      if (!response.ok) {
+        return fail(400, { error: await response.text() });
+      }
+
+      return {
+        success: true,
+      };
+    }
   },
 };

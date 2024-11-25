@@ -22,13 +22,28 @@
 <br />
 
 {#if result}
-  <form action="?/delete" method="post">
-    <p class="font-bold">{result.title}</p>
-    <p class="italic">{result.description}</p>
+  <form method="post">
+    <input type="text" name="title" value={result.title} class="font-bold" />
+    <input
+      type="text"
+      name="description"
+      value={result.description}
+      class="italic"
+    />
 
     <input type="hidden" name="id" value={result.id} />
 
     <button
+      name="action"
+      value="update"
+      type="submit"
+      class="border-none text-black mb-1 hover:bg-black hover:text-white"
+      >Update</button
+    >
+
+    <button
+      name="action"
+      value="delete"
       type="submit"
       class="border-none text-black mb-1 hover:bg-black hover:text-white"
       >Delete</button
@@ -39,7 +54,7 @@
 <br />
 
 <h1 class="font-bold">Add note</h1>
-<form action="?/add" method="post">
+<form method="post">
   <label for="title"
     >Title:
     <input type="text" name="title" /></label
@@ -49,9 +64,11 @@
     >Description:
     <input type="text" name="description" /></label
   >
-  <button type="submit">Add</button>
-</form>
-
-<form action="?/logout" method="post">
-  <button type="submit">Logout</button>
+  <button
+    name="action"
+    value="add"
+    type="submit"
+    class="border-none text-black mb-1 hover:bg-black hover:text-white"
+    >Add</button
+  >
 </form>
