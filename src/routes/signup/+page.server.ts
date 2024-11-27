@@ -1,4 +1,4 @@
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 
 export const prerender = false;
 
@@ -24,3 +24,11 @@ export const actions = {
     return { success: true };
   },
 };
+
+export function load({ cookies }) {
+  const user = cookies.get("jwt");
+
+  if (user) {
+    throw redirect(303, "/dashboard");
+  }
+}

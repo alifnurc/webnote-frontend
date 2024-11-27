@@ -26,3 +26,11 @@ export const actions = {
     throw redirect(303, "/dashboard");
   },
 };
+
+export function load({ cookies }) {
+  const user = cookies.get("jwt");
+
+  if (user) {
+    throw redirect(303, "/dashboard");
+  }
+}
