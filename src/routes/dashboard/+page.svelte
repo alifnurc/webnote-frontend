@@ -24,12 +24,7 @@
 {#if result}
   <form method="post">
     <input type="text" name="title" value={result.title} class="font-bold" />
-    <input
-      type="text"
-      name="description"
-      value={result.description}
-      class="italic"
-    />
+    <textarea name="description" value={result.description} class="italic"></textarea>
 
     <input type="hidden" name="id" value={result.id} />
 
@@ -62,7 +57,7 @@
 
   <label for="description"
     >Description:
-    <input type="text" name="description" /></label
+    <textarea name="description"></textarea></label
   >
   <button
     name="action"
